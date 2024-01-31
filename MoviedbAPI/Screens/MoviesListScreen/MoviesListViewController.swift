@@ -13,10 +13,13 @@ final class MoviesListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     private let cellID = "movieCellID"
     
-    // MARK: Life cycle
+    private let viewModel = MoviesListViewModel(networkManager: NetworkManager())
+    
+    // MARK: Life cycle    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        viewModel.getTopRatedMovies()
     }
     
     // MARK: Helpers
