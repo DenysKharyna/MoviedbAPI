@@ -12,19 +12,22 @@ protocol ReloadCollectionViewDelegate: AnyObject {
 }
 
 final class MoviesListViewModel {
-    private let networkManager: NetworkManager!
-    var moviesList: [Movie] = []
-    
+    // MARK: Properties
+    private let networkManager: NetworkManager
     weak var delegate: ReloadCollectionViewDelegate?
     
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
-    }
+    var moviesList: [Movie] = []
     
     var numberOfCells: Int {
         moviesList.count
     }
     
+    // MARK: Init
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+    }
+    
+    // MARK: Methods
     func getTopRatedMovies() {
         networkManager.getTopRatedMovies { [weak self] result in
             switch result {

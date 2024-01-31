@@ -28,6 +28,13 @@ final class MoviesListCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
+        clipsToBounds = false
+        layer.shadowColor = UIColor.systemGray2.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowOpacity = 0.45
+        layer.shadowRadius = 10
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 12).cgPath
+        
         movieImage.backgroundColor = .systemGray6
         movieImage.layer.cornerRadius = 12
         movieImage.clipsToBounds = true

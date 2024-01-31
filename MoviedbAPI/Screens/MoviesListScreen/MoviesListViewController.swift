@@ -44,8 +44,17 @@ extension MoviesListViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+extension MoviesListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = viewModel.moviesList[indexPath.row]
+        let vc = MovieDetailsViewController(viewModel: MovieDetailsViewModel(movie: movie))
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
 // MARK: - Collection View Layout Configuration
-extension MoviesListViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension MoviesListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         viewModel.cellSize(collectionViewWidth: collectionView.bounds.width)
     }
