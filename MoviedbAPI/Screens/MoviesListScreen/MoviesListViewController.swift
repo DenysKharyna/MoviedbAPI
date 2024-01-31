@@ -8,11 +8,50 @@
 import UIKit
 
 final class MoviesListViewController: UIViewController {
-
+    
+    // MARK: IBOutlets & Properties
+    @IBOutlet weak var collectionView: UICollectionView!
+    private let cellID = "movieCellID"
+    
+    // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        configureCollectionView()
     }
-
+    
+    // MARK: Helpers
+    private func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(MoviesListCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+    }
 }
 
+// MARK: - UICollectionViewDataSource
+extension MoviesListViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MoviesListCollectionViewCell
+        return cell
+    }
+}
+
+// MARK: - Collection View Layout Configuration
+extension MoviesListViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.bounds.width - 56) / 2
+        let height = width * 1.5
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        16
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 15, left: 20, bottom: 20, right: 20)
+    }
+}

@@ -16,13 +16,34 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kam-Pc-VTp">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ery-Ng-zyp">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="kam-Pc-VTp" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="L8s-IB-iwD"/>
+                            <constraint firstItem="kam-Pc-VTp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="UlT-pg-WkU"/>
+                            <constraint firstAttribute="bottom" secondItem="kam-Pc-VTp" secondAttribute="bottom" id="Wdj-Rs-kOp"/>
+                            <constraint firstItem="kam-Pc-VTp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bpe-g7-xea"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="kam-Pc-VTp" id="Gjg-Lx-bgt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="-34"/>
+            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
         </scene>
     </scenes>
     <resources>
