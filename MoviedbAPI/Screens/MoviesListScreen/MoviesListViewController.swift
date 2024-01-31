@@ -18,8 +18,9 @@ final class MoviesListViewController: UIViewController {
     // MARK: Life cycle    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
+        viewModel.delegate = self
         viewModel.getTopRatedMovies()
+        configureCollectionView()
     }
     
     // MARK: Helpers
@@ -33,11 +34,12 @@ final class MoviesListViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension MoviesListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        viewModel.numberOfCells
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MoviesListCollectionViewCell
+        cell.configure(with: MoviesListCellViewModel(movie: viewModel.moviesList[indexPath.row]))
         return cell
     }
 }
@@ -45,9 +47,7 @@ extension MoviesListViewController: UICollectionViewDataSource {
 // MARK: - Collection View Layout Configuration
 extension MoviesListViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.bounds.width - 56) / 2
-        let height = width * 1.5
-        return CGSize(width: width, height: height)
+        viewModel.cellSize(collectionViewWidth: collectionView.bounds.width)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -56,5 +56,14 @@ extension MoviesListViewController: UICollectionViewDelegate, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 15, left: 20, bottom: 20, right: 20)
+    }
+}
+
+// MARK: - ReloadCollectionViewDelegate
+extension MoviesListViewController: ReloadCollectionViewDelegate {
+    func reloadCollectionView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
 }

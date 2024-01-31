@@ -5,7 +5,7 @@
 //  Created by Денис Харына on 31.01.2024.
 //
 
-import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case invalidURL
@@ -15,6 +15,8 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
+    private let cache = NSCache<NSString, UIImage>()
+    
     func getTopRatedMovies(completion: @escaping (Result<[Movie], NetworkError>) -> Void) {
         guard let url = URLConfigurator.topRatedMoviesURL() else {
             completion(.failure(.invalidURL))
@@ -45,6 +47,30 @@ final class NetworkManager {
                 completion(.failure(.parsingError))
             }
             
+        }.resume()
+    }
+    
+    func downloadMovieImage(posterPath path: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        let cacheKey = NSString(string: path)
+        
+        if let image = cache.object(forKey: cacheKey) {
+            completion(.success(image))
+            return
+        }
+        
+        guard let url = URLConfigurator.moviePosterURL(posterPath: path) else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
+            guard let data = data, let image = UIImage(data: data) else {
+                completion(.failure(.invalidData))
+                return
+            }
+            
+            self.cache.setObject(image, forKey: cacheKey)
+            completion(.success(image))
         }.resume()
     }
 }

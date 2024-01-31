@@ -23,13 +23,14 @@ final class MoviesListCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: Helpers
-    func setImage(_ image: UIImage) {
-        movieImage.image = image
+    func configure(with viewModel: MoviesListCellViewModel) {
+        movieImage.setPosterImage(posterPath: viewModel.movie.posterPath, networkManager: NetworkManager())
     }
     
     private func configureUI() {
         movieImage.backgroundColor = .systemGray6
         movieImage.layer.cornerRadius = 12
+        movieImage.clipsToBounds = true
         movieImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(movieImage)
     }
