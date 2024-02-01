@@ -48,7 +48,8 @@ extension MoviesListViewController: UICollectionViewDataSource {
 extension MoviesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = viewModel.moviesList[indexPath.row]
-        let vc = MovieDetailsViewController(viewModel: MovieDetailsViewModel(movie: movie))
+        let movieDetailViewModel = MovieDetailsViewModel(movie: movie, networkManager: viewModel.networkManager)
+        let vc = MovieDetailsViewController(viewModel: movieDetailViewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

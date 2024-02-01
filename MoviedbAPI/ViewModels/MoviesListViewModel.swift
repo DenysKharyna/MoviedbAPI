@@ -13,7 +13,7 @@ protocol ReloadCollectionViewDelegate: AnyObject {
 
 final class MoviesListViewModel {
     // MARK: Properties
-    private let networkManager: NetworkManager
+    let networkManager: NetworkManager
     weak var delegate: ReloadCollectionViewDelegate?
     
     var moviesList: [Movie] = []
