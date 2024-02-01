@@ -9,7 +9,7 @@ import UIKit
 
 final class FavoritesViewController: UIViewController {
     // MARK: Properties
-    private let cellID = "favorireMovieCellId"
+    private let cellID = "favoriteMovieCellId"
     private let tableView = UITableView()
     
     // MARK: Life cycle
