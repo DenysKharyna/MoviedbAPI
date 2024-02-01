@@ -9,7 +9,7 @@ import UIKit
 
 final class MoviesListCollectionViewCell: UICollectionViewCell {
     // MARK: Properties
-    private let movieImage = UIImageView()
+    let movieImage = UIImageView()
     
     // MARK: Life cycle
     override init(frame: CGRect) {

@@ -5,7 +5,7 @@
 //  Created by Денис Харына on 31.01.2024.
 //
 
-import Foundation
+import UIKit
 
 protocol ReloadCollectionViewDelegate: AnyObject {
     func reloadCollectionView()
@@ -14,7 +14,10 @@ protocol ReloadCollectionViewDelegate: AnyObject {
 final class MoviesListViewModel {
     // MARK: Properties
     let networkManager: NetworkManager
+    let coreDataManager = CoreDataManager()
     weak var delegate: ReloadCollectionViewDelegate?
+    
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var moviesList: [Movie] = []
     
@@ -34,6 +37,18 @@ final class MoviesListViewModel {
             case .success(let movies):
                 self?.moviesList = movies
                 self?.delegate?.reloadCollectionView()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func saveMovieToCoreData(movieID id: Int, moviePoster: UIImage) {
+        networkManager.getMovieDetails(movieID: id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let details):
+                self.coreDataManager.saveFavoriteMovie(context: self.context, movieDetails: details, moviePoster: moviePoster)
             case .failure(let error):
                 print(error)
             }

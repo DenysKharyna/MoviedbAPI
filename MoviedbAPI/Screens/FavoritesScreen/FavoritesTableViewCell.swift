@@ -27,7 +27,12 @@ final class FavoritesTableViewCell: UITableViewCell {
 
     // MARK: Helpers
     func configure(with viewModel: FavoritesCellViewModel) {
-        
+        if let imageData = viewModel.moviePosterData {
+            moviePosterImage.imageView.image = UIImage(data: imageData)
+        }
+        movieTitleLabel.text = viewModel.movieTitle
+        movieGenresLabel.text = viewModel.movieGenres
+        movieReleaseDateLabel.text = viewModel.releaseDateText
     }
     private func configureUI() {
         // moviePosterImage

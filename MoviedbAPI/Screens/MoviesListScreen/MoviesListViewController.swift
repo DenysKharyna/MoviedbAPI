@@ -28,6 +28,20 @@ final class MoviesListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(MoviesListCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized(_:)))
+        self.collectionView.addGestureRecognizer(longPressGesture)
+    }
+    
+    // MARK: Selectors
+    @objc private func longPressGestureRecognized(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: collectionView)
+            if let indexPath = collectionView.indexPathForItem(at: touchPoint), 
+                let cell = collectionView.cellForItem(at: indexPath) as? MoviesListCollectionViewCell {
+                guard let posterImage = cell.movieImage.image else { return }
+                viewModel.saveMovieToCoreData(movieID: viewModel.moviesList[indexPath.row].id, moviePoster: posterImage)
+            }
+        }
     }
 }
 

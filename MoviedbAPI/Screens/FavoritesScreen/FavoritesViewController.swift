@@ -12,12 +12,22 @@ final class FavoritesViewController: UIViewController {
     private let cellID = "favoriteMovieCellId"
     private let tableView = UITableView()
     
+    private let viewModel = FavoritesViewModel(coreDataManager: CoreDataManager())
+    
     // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
         configureUI()
         constrain()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchFavoriteMovies()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     // MARK: Helpers
@@ -57,11 +67,12 @@ extension FavoritesViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        viewModel.numberOfCells
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! FavoritesTableViewCell
+        cell.configure(with: FavoritesCellViewModel(movie: viewModel.favoriteMovies[indexPath.row]))
         return cell
     }
 }

@@ -13,12 +13,7 @@ enum CoreDataError: Error {
 }
 
 final class CoreDataManager {
-    static let shared = CoreDataManager()
-    private init() {}
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    func fetchFavoriteMovies(completion: (Result<[FavoriteMovie], CoreDataError>) -> Void) {
+    func fetchFavoriteMovies(context: NSManagedObjectContext, completion: (Result<[FavoriteMovie], CoreDataError>) -> Void) {
         do {
             let movies = try context.fetch(FavoriteMovie.fetchRequest())
             completion(.success(movies))
@@ -27,11 +22,11 @@ final class CoreDataManager {
         }
     }
     
-    func saveFavoriteMovie(movieDetails: MovieDetails) {
+    func saveFavoriteMovie(context: NSManagedObjectContext, movieDetails: MovieDetails, moviePoster: UIImage) {
         let favoriteMovie = FavoriteMovie(context: context)
         favoriteMovie.title = movieDetails.title
         favoriteMovie.releaseDate = movieDetails.releaseDate
-        guard let data = UIImage().jpegData(compressionQuality: 0.5) else { return }
+        guard let data = moviePoster.jpegData(compressionQuality: 0.5) else { return }
         favoriteMovie.posterImageData = data
         favoriteMovie.genres = movieDetails.genres.map({$0.name}) as NSObject
         
