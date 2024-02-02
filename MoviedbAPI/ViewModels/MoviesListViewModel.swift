@@ -43,7 +43,15 @@ final class MoviesListViewModel {
         }
     }
     
-    func saveMovieToCoreData(movieID id: Int, moviePoster: UIImage) {
+    func addMovieToFavorites(movie: Movie, moviePoster: UIImage) throws {
+        if !coreDataManager.isInFavorites(context: context, movie: movie) {
+            saveMovieToCoreData(movieID: movie.id, moviePoster: moviePoster)
+        } else {
+            throw CoreDataError.alreadyInFavorites
+        }
+    }
+    
+    private func saveMovieToCoreData(movieID id: Int, moviePoster: UIImage) {
         networkManager.getMovieDetails(movieID: id) { [weak self] result in
             guard let self = self else { return }
             switch result {

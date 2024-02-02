@@ -10,6 +10,7 @@ import CoreData
 
 enum CoreDataError: Error {
     case fetchError
+    case alreadyInFavorites
     case saveError
     case deleteError
 }
@@ -21,6 +22,19 @@ final class CoreDataManager {
             completion(.success(movies))
         } catch {
             completion(.failure(.fetchError))
+        }
+    }
+    
+    func isInFavorites(context: NSManagedObjectContext, movie: Movie) -> Bool {
+        let fetchRequest = FavoriteMovie.fetchRequest()
+        fetchRequest.fetchLimit =  1
+        fetchRequest.predicate = NSPredicate(format: "title == %@" , movie.title)
+        do {
+            let count = try context.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            print(error)
+            return false
         }
     }
     

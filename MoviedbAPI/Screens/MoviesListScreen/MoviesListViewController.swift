@@ -39,7 +39,17 @@ final class MoviesListViewController: UIViewController {
             if let indexPath = collectionView.indexPathForItem(at: touchPoint), 
                 let cell = collectionView.cellForItem(at: indexPath) as? MoviesListCollectionViewCell {
                 guard let posterImage = cell.movieImage.image else { return }
-                viewModel.saveMovieToCoreData(movieID: viewModel.moviesList[indexPath.row].id, moviePoster: posterImage)
+                let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                actionAlert.addAction(UIAlertAction(title: "Add to Favorites", style: .default, handler: { [weak self]_ in
+                    guard let self = self else { return }
+                    do {
+                        try self.viewModel.addMovieToFavorites(movie: self.viewModel.moviesList[indexPath.row], moviePoster: posterImage)
+                    } catch {
+                        print(error)
+                    }
+                }))
+                actionAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                present(actionAlert, animated: true)
             }
         }
     }

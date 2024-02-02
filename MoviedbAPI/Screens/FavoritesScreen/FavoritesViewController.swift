@@ -59,7 +59,6 @@ final class FavoritesViewController: UIViewController {
         if sender.state == .began {
             let touchPoint = sender.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                let movie = viewModel.favoriteMovies[indexPath.row]
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "Delete form Favorites", style: .destructive, handler: { [weak self] _ in
                     self?.viewModel.deleteFavoriteMovie(at: indexPath.row)
