@@ -10,6 +10,8 @@ import CoreData
 
 enum CoreDataError: Error {
     case fetchError
+    case saveError
+    case deleteError
 }
 
 final class CoreDataManager {
@@ -30,6 +32,15 @@ final class CoreDataManager {
         favoriteMovie.posterImageData = data
         favoriteMovie.genres = movieDetails.genres.map({$0.name}) as NSObject
         
+        do {
+            try context.save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteFavoriteMovie(context: NSManagedObjectContext, movie: FavoriteMovie) {
+        context.delete(movie)
         do {
             try context.save()
         } catch {

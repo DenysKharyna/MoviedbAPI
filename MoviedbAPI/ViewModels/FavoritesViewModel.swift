@@ -34,4 +34,9 @@ final class FavoritesViewModel {
             }
         }
     }
+    
+    func deleteFavoriteMovie(at index: Int) {
+        coreDataManager.deleteFavoriteMovie(context: context, movie: favoriteMovies[index])
+        favoriteMovies.remove(at: index)
+    }
 }

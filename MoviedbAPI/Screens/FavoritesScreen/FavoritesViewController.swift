@@ -36,6 +36,8 @@ final class FavoritesViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized(_:)))
+        self.tableView.addGestureRecognizer(longPressGesture)
         view.addSubview(tableView)
     }
     
@@ -50,6 +52,23 @@ final class FavoritesViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    // MARK: Selectors
+    @objc private func longPressGestureRecognized(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let movie = viewModel.favoriteMovies[indexPath.row]
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "Delete form Favorites", style: .destructive, handler: { [weak self] _ in
+                    self?.viewModel.deleteFavoriteMovie(at: indexPath.row)
+                    self?.tableView.deleteRows(at: [indexPath], with: .fade)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                present(alert, animated: true)
+            }
+        }
     }
 }
 
