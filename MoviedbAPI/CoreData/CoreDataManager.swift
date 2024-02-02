@@ -11,8 +11,15 @@ import CoreData
 enum CoreDataError: Error {
     case fetchError
     case alreadyInFavorites
-    case saveError
-    case deleteError
+    
+    var description: String {
+        switch self {
+        case .fetchError:
+            "Sorry, there is appeared a problem with retrieving your favorites movies."
+        case .alreadyInFavorites:
+            "You have already added this movie to your favorites."
+        }
+    }
 }
 
 final class CoreDataManager {
@@ -33,7 +40,6 @@ final class CoreDataManager {
             let count = try context.count(for: fetchRequest)
             return count > 0
         } catch {
-            print(error)
             return false
         }
     }

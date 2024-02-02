@@ -7,7 +7,11 @@
 
 import UIKit
 
-protocol ReloadCollectionViewDelegate: AnyObject {
+protocol ErrorPresenter: AnyObject {
+    func presentError(message: String)
+}
+
+protocol MovieListDelegate: ErrorPresenter  {
     func reloadCollectionView()
 }
 
@@ -15,7 +19,7 @@ final class MoviesListViewModel {
     // MARK: Properties
     let networkManager: NetworkManager
     let coreDataManager = CoreDataManager()
-    weak var delegate: ReloadCollectionViewDelegate?
+    weak var delegate: MovieListDelegate?
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -38,16 +42,16 @@ final class MoviesListViewModel {
                 self?.moviesList = movies
                 self?.delegate?.reloadCollectionView()
             case .failure(let error):
-                print(error)
+                self?.delegate?.presentError(message: error.description)
             }
         }
     }
     
-    func addMovieToFavorites(movie: Movie, moviePoster: UIImage) throws {
+    func addMovieToFavorites(movie: Movie, moviePoster: UIImage) {
         if !coreDataManager.isInFavorites(context: context, movie: movie) {
             saveMovieToCoreData(movieID: movie.id, moviePoster: moviePoster)
         } else {
-            throw CoreDataError.alreadyInFavorites
+            delegate?.presentError(message: CoreDataError.alreadyInFavorites.description)
         }
     }
     
@@ -58,7 +62,7 @@ final class MoviesListViewModel {
             case .success(let details):
                 self.coreDataManager.saveFavoriteMovie(context: self.context, movieDetails: details, moviePoster: moviePoster)
             case .failure(let error):
-                print(error)
+                self.delegate?.presentError(message: error.description)
             }
         }
     }

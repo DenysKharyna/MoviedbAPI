@@ -12,6 +12,8 @@ final class FavoritesViewModel {
     let coreDataManager: CoreDataManager
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    weak var delegate: ErrorPresenter?
+    
     var favoriteMovies: [FavoriteMovie] = []
     
     var numberOfCells: Int {
@@ -30,7 +32,7 @@ final class FavoritesViewModel {
             case .success(let movies):
                 self?.favoriteMovies = movies
             case .failure(let error):
-                print(error)
+                self?.delegate?.presentError(message: error.description)
             }
         }
     }

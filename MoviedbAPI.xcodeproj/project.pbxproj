@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61656EE22B6D3B4500EC0C5B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61656EE12B6D3B4500EC0C5B /* UIViewController+Extension.swift */; };
+		61656EE42B6D4E7700EC0C5B /* NetworkErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61656EE32B6D4E7700EC0C5B /* NetworkErrors.swift */; };
 		61971A6A2B6BEF6300E8E9B4 /* MoviePosterImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61971A692B6BEF6300E8E9B4 /* MoviePosterImage.swift */; };
 		61971A6D2B6BF4A900E8E9B4 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61971A6C2B6BF4A900E8E9B4 /* UILabel+Extension.swift */; };
 		61971A6F2B6BF62100E8E9B4 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61971A6E2B6BF62100E8E9B4 /* SeparatorView.swift */; };
@@ -39,6 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		61656EE12B6D3B4500EC0C5B /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		61656EE32B6D4E7700EC0C5B /* NetworkErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrors.swift; sourceTree = "<group>"; };
 		61971A692B6BEF6300E8E9B4 /* MoviePosterImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterImage.swift; sourceTree = "<group>"; };
 		61971A6C2B6BF4A900E8E9B4 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		61971A6E2B6BF62100E8E9B4 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 				619A3E752B6A442E00A1685E /* URLConfigurator.swift */,
 				61E05D012B6A58AF0051B348 /* HttpRequest.swift */,
 				619A3E732B6A421100A1685E /* NetworkConstants.swift */,
+				61656EE32B6D4E7700EC0C5B /* NetworkErrors.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 			children = (
 				61E05D0C2B6A91AE0051B348 /* UIImageView+Extension.swift */,
 				61971A6C2B6BF4A900E8E9B4 /* UILabel+Extension.swift */,
+				61656EE12B6D3B4500EC0C5B /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -295,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61656EE22B6D3B4500EC0C5B /* UIViewController+Extension.swift in Sources */,
 				61E05D102B6AA0B40051B348 /* MovieDetailsViewController.swift in Sources */,
 				61C8F4362B69136D00D312AB /* MoviesListViewController.swift in Sources */,
 				61971A732B6C0DE600E8E9B4 /* FavoritesCellViewModel.swift in Sources */,
@@ -311,6 +318,7 @@
 				61C8F4342B69136D00D312AB /* SceneDelegate.swift in Sources */,
 				61971A6D2B6BF4A900E8E9B4 /* UILabel+Extension.swift in Sources */,
 				61E05D052B6A60320051B348 /* MoviesListViewModel.swift in Sources */,
+				61656EE42B6D4E7700EC0C5B /* NetworkErrors.swift in Sources */,
 				61E05D122B6AA1050051B348 /* MovieDetailsViewModel.swift in Sources */,
 				61C8F44E2B6916DB00D312AB /* TabBarViewController.swift in Sources */,
 				61971A712B6C086800E8E9B4 /* FavoritesTableViewCell.swift in Sources */,

@@ -40,13 +40,9 @@ final class MoviesListViewController: UIViewController {
                 let cell = collectionView.cellForItem(at: indexPath) as? MoviesListCollectionViewCell {
                 guard let posterImage = cell.movieImage.image else { return }
                 let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                actionAlert.addAction(UIAlertAction(title: "Add to Favorites", style: .default, handler: { [weak self]_ in
+                actionAlert.addAction(UIAlertAction(title: "Add to Favorites", style: .default, handler: { [weak self] _ in
                     guard let self = self else { return }
-                    do {
-                        try self.viewModel.addMovieToFavorites(movie: self.viewModel.moviesList[indexPath.row], moviePoster: posterImage)
-                    } catch {
-                        print(error)
-                    }
+                    self.viewModel.addMovieToFavorites(movie: self.viewModel.moviesList[indexPath.row], moviePoster: posterImage)
                 }))
                 actionAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                 present(actionAlert, animated: true)
@@ -94,10 +90,15 @@ extension MoviesListViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - ReloadCollectionViewDelegate
-extension MoviesListViewController: ReloadCollectionViewDelegate {
+extension MoviesListViewController: MovieListDelegate {
     func reloadCollectionView() {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
     }
+    
+    func presentError(message: String) {
+        presentErrorAlert(message: message)
+    }
+
 }

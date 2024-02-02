@@ -6,14 +6,7 @@
 //
 
 import UIKit
-
-enum NetworkError: Error {
-    case invalidURL
-    case invalidData
-    case sessionError
-    case parsingError
-}
-
+    
 final class NetworkManager {
     private let cache = NSCache<NSString, UIImage>()
     
@@ -51,7 +44,7 @@ final class NetworkManager {
     }
     
     // MARK: Method for downloading movie poster image
-    func downloadMovieImage(posterPath path: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+    func downloadMovieImage(posterPath path: String, completion: @escaping (Result<UIImage, DownloadingImageError>) -> Void) {
         let cacheKey = NSString(string: path)
         
         if let image = cache.object(forKey: cacheKey) {

@@ -17,6 +17,7 @@ final class FavoritesViewController: UIViewController {
     // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
         configureTableView()
         configureUI()
         constrain()
@@ -92,5 +93,12 @@ extension FavoritesViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! FavoritesTableViewCell
         cell.configure(with: FavoritesCellViewModel(movie: viewModel.favoriteMovies[indexPath.row]))
         return cell
+    }
+}
+
+// MARK: - ErrorPresenter
+extension FavoritesViewController: ErrorPresenter {
+    func presentError(message: String) {
+        presentErrorAlert(message: message)
     }
 }
